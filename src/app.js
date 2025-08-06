@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 
 app.use("/", (req, res) => {
-  res.send("1st server code");
+  res.send("1st server code");    // network handler
 });
 
 app.use("/test", (req, res) => {
