@@ -2,8 +2,26 @@ const express = require("express");
 
 const app = express();
 
-app.use("/", (req, res) => {
-  res.send("1st server code");    // network handler
+app.get("/hello", (req, res) => {
+  res.send({
+    name: "juabir",
+    age: 22,
+  });
+});
+
+app.post("/hello", (req, res) => {
+  res.send({
+    name: "juabir",
+    age: 22,
+  });
+});
+
+app.delete("/hello", (req, res) => {
+  res.send("deleted successfully");
+});
+
+app.use("/test/2", (req, res) => {
+  res.send("4nd server code");
 });
 
 app.use("/test", (req, res) => {
@@ -12,6 +30,10 @@ app.use("/test", (req, res) => {
 
 app.use("/server", (req, res) => {
   res.send("3nd server code");
+});
+
+app.use("/", (req, res) => {
+  res.send("1st server code"); // network handler
 });
 
 app.listen(7777, () => {
