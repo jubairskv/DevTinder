@@ -32,9 +32,22 @@ app.use("/server", (req, res) => {
   res.send("3nd server code");
 });
 
+app.get("/user", (req, res) => {
+  console.log(req.query)
+  res.send("5nd server post code");
+});
+
+//dynmcaic route
+app.get("/user/:id", (req, res) => {  
+  console.log(req.params);
+  res.send("6nd server post code");
+});
+
 app.use("/", (req, res) => {
   res.send("1st server code"); // network handler
 });
+
+
 
 app.listen(7777, () => {
   console.log("Server is running on port 7777");
