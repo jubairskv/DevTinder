@@ -12,7 +12,7 @@
 
 
 
-
+// Database - Schema & Models
 - create a free cluster on mongoDB offical website (Mongo atlast)
 - Install mongoose library
 - Connect your application to the database "Connection-url/devTinder"
