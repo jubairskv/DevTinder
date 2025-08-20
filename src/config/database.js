@@ -1,14 +1,10 @@
 const mongoose = require("mongoose");
 
 const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("MongoDB connected successfully");
-  } catch (error) {
-    console.error("MongoDB connection failed:", error);
-    process.exit(1); // Exit the process with failure
-  }
+  await mongoose.connect(             // devTiner is database name to connect to partcular database
+    "mongodb+srv://jubairk:X53SwsPJUifU5weH@cluster0.n9xubax.mongodb.net/devTinder"
+  );
 };
+
+module.exports = connectDB; // Export the connectDB function to use in other files
+

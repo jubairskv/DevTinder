@@ -9,3 +9,12 @@
 - what are dependencies
 - what is the use of "-g" while npm install
 - Differnce between caret and tidle (^ vs ~ )
+
+
+
+
+- create a free cluster on mongoDB offical website (Mongo atlast)
+- Install mongoose library
+- Connect your application to the database "Connection-url/devTinder"
+- Call the connectDB function and connect to database before statrting application on 7777 
+- Create user Schemas
