@@ -25,4 +25,4 @@ const userSchema = new mongoose.Schema({
 
 //module.exports = User; // Export the User model to use in other files
 
-model.exports = mongoose.model("User", userSchema); // Export the User model to use in other files
+module.exports = mongoose.model("User", userSchema); // Export the User model to use in other files
