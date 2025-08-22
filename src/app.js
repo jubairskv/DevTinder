@@ -1,40 +1,40 @@
 const express = require("express");
-const connectDB = require("./config/database"); // Import the database connection setup
-const User = require("./models/user"); // Import the User model
+//const connectDB = require("./config/database"); // Import the database connection setup
+//const User = require("./models/user"); // Import the User model
 
 const app = express();
 
-app.post("/signUp", async (req, res) => {
-  const user = new User({
-    firstName: "Arvind",
-    lastName: "S",
-    emailId: "arvind@gmail.com",
-    password: "Arvind@123",
-    age: 24,
-    gender: "Male",
-  });
+// app.post("/signUp", async (req, res) => {
+//   const user = new User({
+//     firstName: "Arvind",
+//     lastName: "S",
+//     emailId: "arvind@gmail.com",
+//     password: "Arvind@123",
+//     age: 24,
+//     gender: "Male",
+//   });
 
-  try {
-    await user.save();
-    res.send("User Added Successfully");
-  } catch (err) {
-    console.error("Error saving user:", err);
-    res.status(500).send("Error saving the user : " + err.message);
-  }
-});
+//   try {
+//     await user.save();
+//     res.send("User Added Successfully");
+//   } catch (err) {
+//     console.error("Error saving user:", err);
+//     res.status(500).send("Error saving the user : " + err.message);
+//   }
+// });
 
-connectDB()
-  .then(() => {
-    console.log("MongoDB connected");
-    app.listen(7777, () => {
-      console.log("Server is running on port 7777");
-    });
-  })
-  .catch((err) => {
-    console.error("MongoDB connection error:", err);
-  });
+// connectDB()
+//   .then(() => {
+//     console.log("MongoDB connected");
+//     app.listen(7777, () => {
+//       console.log("Server is running on port 7777");
+//     });
+//   })
+//   .catch((err) => {
+//     console.error("MongoDB connection error:", err);
+//   });
 
-// app.get("/hello", (req, res) => {
+// app.get("/hello/2", (req, res) => {
 //   res.send({
 //     name: "juabir",
 //     age: 22,
@@ -48,17 +48,23 @@ connectDB()
 //   });
 // });
 
-// app.delete("/hello", (req, res) => {
-//   res.send("deleted successfully");
-// });
+app.get("/hello", (req, res) => {
+  res.send("deleted hello successfully");
+});
 
-// app.use("/test/2", (req, res) => {
-//   res.send("4nd server code");            // app.use route handler can handle all HTTP methods
-// });
 
-// app.use("/test", (req, res) => {
-//   res.send("2nd server code");
-// });
+app.get("/hello/2", (req, res) => {
+  res.send("deleted successfully");
+});
+
+
+app.use("/test/2", (req, res) => {
+  res.send("4nd server code");            // app.use route handler can handle all HTTP methods
+});
+
+app.use("/test", (req, res) => {
+  res.send("2nd server code");
+});
 
 // app.use("/server", (req, res) => {
 //   res.send("3nd server code");
@@ -108,3 +114,7 @@ connectDB()
 //     res.send("Final response after all middleware");
 //   }
 // );
+
+app.listen(7777, () => {
+  console.log("Server is running on port 7777");
+});

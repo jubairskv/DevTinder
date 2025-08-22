@@ -10,6 +10,16 @@
 - what is the use of "-g" while npm install
 - Differnce between caret and tidle (^ vs ~ )
 
+- Routing and Request Handler
+- Initialize git
+- gitignore
+- create a remote repo on github
+- push all code to remote origin
+- play with routes and route extension  ex /hello , / , /hello/2 , /test
+-  Order of the routes matters a lot
+
+
+
 // Database - Schema & Models
 
 - create a free cluster on mongoDB offical website (Mongo atlast)
