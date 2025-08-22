@@ -17,6 +17,12 @@
 - push all code to remote origin
 - play with routes and route extension  ex /hello , / , /hello/2 , /test
 -  Order of the routes matters a lot
+- Install postman app and make a workspace/collection -> test API call
+- write logic to handle GET , POST , PATCH , DELETE , API Calls and test then on postman
+- Explore routing and use of ? , + , () , * in the routes 
+- use of regext in routes /a/ , /.*fly$/
+- how to reading Query , params in the routes 
+- reading the dynamic routes 
 
 
 
@@ -30,5 +36,4 @@
 - Create POST /signUp to add data to database
 - push some documents using api calls from postman
 - Error handling using try , catch
-- Install postman app and make a workspace/collection -> test API call
-- write logic to handle GET , POST , PATCH , DELETE , API Calls and test then on postman
+

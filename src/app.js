@@ -34,113 +34,46 @@ const app = express();
 //     console.error("MongoDB connection error:", err);
 //   });
 
-// app.get("/hello/2", (req, res) => {
-//   res.send({
-//     name: "juabir",
-//     age: 22,
-//   });
+// app.get("/ab*c", (req, res) => {
+//   res.send("literal ? route");
 // });
 
-// app.post("/hello", (req, res) => {
-//   res.send({
-//     name: "juabir",
-//     age: 22,
-//   });
+// app.get("/a/", (req, res) => {
+//   res.send("regex /a/ route");
 // });
 
-app.get("/user", (req, res) => {
-  res.send({
-    firstName: "Arvind",
-    lastName: "S",
-    emailId: "arvind@gmail.com",
-    password: "Arvind@123",
-  });
-});
+// app.get(/.*fly$/ , (req, res) => {
+//   res.send("regex /.*fly$/ route");
+// });
 
-app.post("/user", (req, res) => {
-  res.send("hello successfully"); // app.post route handler can handle only POST requests
-});
-
-app.get("/user/2", (req, res) => {
-  res.send("get successfully"); // app.get route handler can handle only GET requests   
-});
-
-app.delete("/user", (req, res) => {
-  res.send("deleted successfully"); // app.delete route handler can handle only DELETE requests
-});
-
-app.patch("/user", (req, res) => {
-  res.send("patched successfully"); // app.patch route handler can handle only PATCH requests
-});
-
-app.put("/user", (req, res) => {
-  res.send("put successfully"); // app.put route handler can handle only PUT requests
-});
-
-app.get("/hello", (req, res) => {
-  res.send("deleted hello successfully");
-});
-
-app.get("/hello/2", (req, res) => {
-  res.send("deleted successfully");
-});
-
-app.use("/test/2", (req, res) => {
-  res.send("4nd server code"); // app.use route handler can handle all HTTP methods
-});
-
-app.use("/test", (req, res) => {
-  res.send("2nd server code");
-});
-
-// app.use("/server", (req, res) => {
-//   res.send("3nd server code");
+// app.get("/user/:id", (req, res) => {
+//   res.send(`User ID is: ${req.params.id}`); // Use req.params.id to access the user ID
 // });
 
 // app.get("/user", (req, res) => {
-//   console.log(req.query)
-//   res.send("5nd server post code");
+//   console.log(req.query); // Log the query parameters to the console
+//   // Access the user ID from query parameters
+//   res.send(`User ID is: ${req.query.userId}`); // Use req.query.userId to access the user ID from query parameters
 // });
 
-// //dynmcaic route
+// app.get("/user", (req, res) => {
+//   console.log(req.query); // Log the query parameters to the console
+//   // Access the user ID from query parameters
+//   res.send(`User ID is: ${req.query.userId} ${req.query.password}`); // Use req.query.userId to access the user ID from query parameters
+// });
+
+//dynamic route parameters
 // app.get("/user/:id", (req, res) => {
-//   console.log(req.params);
-//   res.send("6nd server post code");
+//   console.log(req.params); // Log the route parameters to the console
+//   // Access the user ID from route parameters
+//   res.send("User ID is " + req.params.id);
 // });
 
-// app.use("/", (req, res) => {
-//   res.send("1st server code"); // network handler
-// });
-
-// app.use(
-//   "/user",
-//   (res, req, next) => {
-//     console.log("handlinq user request 1");
-//     next();
-//   },
-//   (req, res, next) => {
-//     console.log("handlinq user request 2");
-//     next();
-//   },
-//   (req, res) => {
-//     console.log("handlinq user request 3");
-//     //res.send("user request handled");
-//     next();
-//   },
-//   (req, res) => {
-//     console.log("This will not be executed because response is sent");
-//     //res.send("This will not be sent");
-//     next();S
-//   },
-//   (err, req, res, next) => {
-//     console.error("Error occurred:", err);
-//     //res.status(500).send("Internal Server Error");
-//     next();
-//   },
-//   (req, res) => {
-//     res.send("Final response after all middleware");
-//   }
-// );
+app.get("/user/:id/:name/:password", (req, res) => {
+  console.log(req.params); // Log the route parameters to the console
+  // Access the user ID from route parameters
+  res.send("User ID is " + req.params.id);
+});
 
 app.listen(7777, () => {
   console.log("Server is running on port 7777");
