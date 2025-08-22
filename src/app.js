@@ -48,18 +48,41 @@ const app = express();
 //   });
 // });
 
+app.get("/user", (req, res) => {
+  res.send({
+    firstName: "Arvind",
+    lastName: "S",
+    emailId: "arvind@gmail.com",
+    password: "Arvind@123",
+  });
+});
+
+app.post("/user", (req, res) => {
+  res.send("hello successfully"); // app.post route handler can handle only POST requests
+});
+
+app.delete("/user", (req, res) => {
+  res.send("deleted successfully"); // app.delete route handler can handle only DELETE requests
+});
+
+app.patch("/user", (req, res) => {
+  res.send("patched successfully"); // app.patch route handler can handle only PATCH requests
+});
+
+app.put("/user", (req, res) => {
+  res.send("put successfully"); // app.put route handler can handle only PUT requests
+});
+
 app.get("/hello", (req, res) => {
   res.send("deleted hello successfully");
 });
-
 
 app.get("/hello/2", (req, res) => {
   res.send("deleted successfully");
 });
 
-
 app.use("/test/2", (req, res) => {
-  res.send("4nd server code");            // app.use route handler can handle all HTTP methods
+  res.send("4nd server code"); // app.use route handler can handle all HTTP methods
 });
 
 app.use("/test", (req, res) => {

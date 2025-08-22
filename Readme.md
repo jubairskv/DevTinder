@@ -31,3 +31,4 @@
 - push some documents using api calls from postman
 - Error handling using try , catch
 - Install postman app and make a workspace/collection -> test API call
+- write logic to handle GET , POST , PATCH , DELETE , API Calls and test then on postman
