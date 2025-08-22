@@ -61,6 +61,10 @@ app.post("/user", (req, res) => {
   res.send("hello successfully"); // app.post route handler can handle only POST requests
 });
 
+app.get("/user/2", (req, res) => {
+  res.send("get successfully"); // app.get route handler can handle only GET requests   
+});
+
 app.delete("/user", (req, res) => {
   res.send("deleted successfully"); // app.delete route handler can handle only DELETE requests
 });
