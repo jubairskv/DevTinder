@@ -136,29 +136,39 @@ const app = express();
 // it will check for all the routes starting with "/" app.xxx() matching
 // it will execute first before any route handler
 
-app.use("/", (req, res, next) => {
-  console.log("Middleware for all routes");
-  //res.send("Response from middleware for all routes");
-  next();
+// app.use("/", (req, res, next) => {
+//   console.log("Middleware for all routes");
+//   //res.send("Response from middleware for all routes");
+//   next();
+// });
+
+// app.get(
+//   "/user",
+//   (req, res, next) => {
+//     console.log("Handler for /user route");
+//     //res.send("Response from handler for /user route");
+//     next();
+//   },
+//   (req, res, next) => {
+//     console.log("Second handler for /user route");
+//     // res.send("Response from second handler for /user route"); // this will throw error as response is already sent
+//     next();
+//   },
+//   (req, res) => {
+//     console.log("Third handler for /user route");
+//     res.send("Response from third handler for /user route");
+//   }
+// );
+
+app.get("/admin/getAllData", (req, res) => {
+  //logic to fetching  all data
+  res.send("All Data sent");
 });
 
-app.get(
-  "/user",
-  (req, res, next) => {
-    console.log("Handler for /user route");
-    //res.send("Response from handler for /user route");
-    next();
-  },
-  (req, res, next) => {
-    console.log("Second handler for /user route");
-    // res.send("Response from second handler for /user route"); // this will throw error as response is already sent
-    next();
-  },
-  (req, res) => {
-    console.log("Third handler for /user route");
-    res.send("Response from third handler for /user route");
-  }
-);
+app.get("/admin/deleteuser", (req, res) => {
+  //logic to delete all data
+  res.send("All Data deleted");
+});
 
 app.listen(7777, () => {
   console.log("Server is running on port 7777");
