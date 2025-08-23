@@ -15,16 +15,21 @@
 - gitignore
 - create a remote repo on github
 - push all code to remote origin
-- play with routes and route extension  ex /hello , / , /hello/2 , /test
--  Order of the routes matters a lot
+- play with routes and route extension ex /hello , / , /hello/2 , /test
+- Order of the routes matters a lot
 - Install postman app and make a workspace/collection -> test API call
 - write logic to handle GET , POST , PATCH , DELETE , API Calls and test then on postman
-- Explore routing and use of ? , + , () , * in the routes 
-- use of regext in routes /a/ , /.*fly$/
-- how to reading Query , params in the routes 
-- reading the dynamic routes 
+- Explore routing and use of ? , + , () , \* in the routes
+- use of regext in routes /a/ , /.\*fly$/
+- how to reading Query , params in the routes
+- reading the dynamic routes
 
+// Middlwares and error handlers:
 
+-Multiple Route handlers - play with your code
+- next()
+- next function and error along with res.send()
+  app.use("/route" , rH1 , rH2 , [rH3 ,rH4] , rH5)
 
 // Database - Schema & Models
 
@@ -36,4 +41,3 @@
 - Create POST /signUp to add data to database
 - push some documents using api calls from postman
 - Error handling using try , catch
-
