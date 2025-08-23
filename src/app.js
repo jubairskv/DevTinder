@@ -78,37 +78,86 @@ const app = express();
 //
 
 //app.use("/route" , rH1 , [rH2 , rH3] , rH4 , rH5);   // araay of route handles
-  
-app.use(
+
+// app.use(
+//   "/user",
+//   (req, res, next) => {
+//     console.log("Handling /user request...");
+//     next();
+//     //res.send("Response!!!");
+//     //next();
+//   },
+//   (req, res, next) => {
+//     console.log("2nd handler for /user");
+//     //res.send("2nd Response");
+//     next();
+//   },
+//   (req, res, next) => {
+//     console.log("3nd handler for /user");
+//     //res.send("3nd Response");
+//     next();
+//   },
+//   [
+//     (req, res, next) => {
+//       console.log("4nd handler for /user");
+//       //res.send("4nd Response");
+//       next();
+//     },
+//     (req, res) => {
+//       console.log("5nd handler for /user");
+//       res.send("5nd Response");
+//       // next();
+//     },
+//   ]
+// );
+
+// app.get(
+//   "/user",
+//   (req, res, next) => {
+//     console.log("First handler for /user");
+//     //res.send("First Response");
+//     next();
+//   },
+//   (req, res, next) => {
+//     console.log("Third handler for /user"); // res.send("Third Response")
+//     res.send("Third Response");
+//     // No next() here, so the chain ends  ;
+//   }
+// );
+
+// app.get("/user", (req, res, next) => {
+//   console.log("Second handler for /user");
+//   //res.send("Second Response");
+//   next();
+// });
+
+//Middleware for all routes:
+
+// it will check for all the routes starting with "/" app.xxx() matching
+// it will execute first before any route handler
+
+app.use("/", (req, res, next) => {
+  console.log("Middleware for all routes");
+  //res.send("Response from middleware for all routes");
+  next();
+});
+
+app.get(
   "/user",
   (req, res, next) => {
-    console.log("Handling /user request...");
-    next();
-    //res.send("Response!!!");
-    //next();
-  },
-  (req, res, next) => {
-    console.log("2nd handler for /user");
-    //res.send("2nd Response");
+    console.log("Handler for /user route");
+    //res.send("Response from handler for /user route");
     next();
   },
   (req, res, next) => {
-    console.log("3nd handler for /user");
-    //res.send("3nd Response");
+    console.log("Second handler for /user route");
+    // res.send("Response from second handler for /user route"); // this will throw error as response is already sent
     next();
   },
-  [
-    (req, res, next) => {
-      console.log("4nd handler for /user");
-      //res.send("4nd Response");
-      next();
-    },
-    (req, res) => {
-      console.log("5nd handler for /user");
-      res.send("5nd Response");
-      // next();
-    },
-  ]
+  (req, res) => {
+    console.log("Third handler for /user route");
+    res.send("Response from third handler for /user route");
+  }
 );
 
 app.listen(7777, () => {

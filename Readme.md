@@ -26,10 +26,13 @@
 
 // Middlwares and error handlers:
 
--Multiple Route handlers - play with your code
+- Multiple Route handlers - play with your code
 - next()
 - next function and error along with res.send()
-  app.use("/route" , rH1 , rH2 , [rH3 ,rH4] , rH5)
+- app.use("/route" , rH1 , rH2 , [rH3 ,rH4] , rH5)
+- what is middlewares
+- how express JS basically handles request behind the scenes
+
 
 // Database - Schema & Models
 
