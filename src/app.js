@@ -69,11 +69,47 @@ const app = express();
 //   res.send("User ID is " + req.params.id);
 // });
 
-app.get("/user/:id/:name/:password", (req, res) => {
-  console.log(req.params); // Log the route parameters to the console
-  // Access the user ID from route parameters
-  res.send("User ID is " + req.params.id);
-});
+// app.get("/user/:id/:name/:password", (req, res) => {
+//   console.log(req.params); // Log the route parameters to the console
+//   // Access the user ID from route parameters
+//   res.send("User ID is " + req.params.id);
+// });
+
+//
+
+//app.use("/route" , rH1 , [rH2 , rH3] , rH4 , rH5);   // araay of route handles
+  
+app.use(
+  "/user",
+  (req, res, next) => {
+    console.log("Handling /user request...");
+    next();
+    //res.send("Response!!!");
+    //next();
+  },
+  (req, res, next) => {
+    console.log("2nd handler for /user");
+    //res.send("2nd Response");
+    next();
+  },
+  (req, res, next) => {
+    console.log("3nd handler for /user");
+    //res.send("3nd Response");
+    next();
+  },
+  [
+    (req, res, next) => {
+      console.log("4nd handler for /user");
+      //res.send("4nd Response");
+      next();
+    },
+    (req, res) => {
+      console.log("5nd handler for /user");
+      res.send("5nd Response");
+      // next();
+    },
+  ]
+);
 
 app.listen(7777, () => {
   console.log("Server is running on port 7777");
