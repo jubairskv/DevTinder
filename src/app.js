@@ -1,6 +1,7 @@
 const express = require("express");
 //const connectDB = require("./config/database"); // Import the database connection setup
 //const User = require("./models/user"); // Import the User model
+const { AuthAdmin, AuthUser } = require("./middlewares/auth"); // Import the User model
 
 const app = express();
 
@@ -160,14 +161,44 @@ const app = express();
 //   }
 // );
 
+// Middleware for specific route prefix
+// app.use("/admin", (req, res, next) => {
+//   console.log("Admin Middleware called");
+//   //res.send("Response from admin middleware");
+//   const token = "xyzzzz";
+//   const isAdmin = token === "xyzzzz"; // Example check for admin token
+//   if (!isAdmin) {
+//     res.status(401).send("Unauthorized");
+//   } else {
+//     next();
+//   }
+// });
+
+app.use("/admin", AuthAdmin);
+
+app.get("/user", AuthUser, (req, res) => {
+  console.log("User Middleware called");
+  res.send("User Route");
+});
+
+app.get("/user", (req, res) => {
+  //logic to fetching user
+  res.send("User Route");
+});
+
 app.get("/admin/getAllData", (req, res) => {
   //logic to fetching  all data
-  res.send("All Data sent");
+  res.send("All Data fetched");
 });
 
 app.get("/admin/deleteuser", (req, res) => {
   //logic to delete all data
   res.send("All Data deleted");
+});
+
+app.post("/user/login", (req, res) => {
+  //logic to delete all data
+  res.send("User logged in successfully");
 });
 
 app.listen(7777, () => {
