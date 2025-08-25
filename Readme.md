@@ -10,7 +10,7 @@
 - what is the use of "-g" while npm install
 - Differnce between caret and tidle (^ vs ~ )
 
-- Routing and Request Handler
+//Routing and Request Handler
 - Initialize git
 - gitignore
 - create a remote repo on github
@@ -25,7 +25,6 @@
 - reading the dynamic routes
 
 // Middlwares and error handlers:
-
 - Multiple Route handlers - play with your code
 - next()
 - next function and error along with res.send()
@@ -35,10 +34,9 @@
 - Difference bw app.use() and app.all()
 - write a dummy auth middleware for admin
 - write a dummy user middleware for userAdmin except /user/login api
-- Error handling using app.use("/", (err, req , res , next )=> {}) always handle at ur project 
+- Error handling using app.use("/", (err, req , res , next )=> {}) always handle at ur project
 
 // Database - Schema & Models
-
 - create a free cluster on mongoDB offical website (Mongo atlast)
 - Install mongoose library
 - Connect your application to the database "Connection-url/devTinder"
