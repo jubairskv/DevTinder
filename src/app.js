@@ -174,31 +174,52 @@ const app = express();
 //   }
 // });
 
-app.use("/admin", AuthAdmin);
+//app.use("/admin", AuthAdmin);
 
-app.get("/user", AuthUser, (req, res) => {
-  console.log("User Middleware called");
-  res.send("User Route");
+// app.get("/user", AuthUser, (req, res) => {
+//   console.log("User Middleware called");
+//   res.send("User Route");
+// });
+
+// app.get("/user", (req, res) => {
+//   //logic to fetching user
+//   res.send("User Route");
+// });
+
+// app.get("/admin/getAllData", (req, res) => {
+//   //logic to fetching  all data
+//   res.send("All Data fetched");
+// });
+
+// app.get("/admin/deleteuser", (req, res) => {
+//   //logic to delete all data
+//   res.send("All Data deleted");
+// });
+
+// app.post("/user/login", (req, res) => {
+//   //logic to delete all data
+//   res.send("User logged in successfully");
+// });
+
+app.use("/", (err, req, res, next) => {
+  console.error("Global error handler:", err);
+  res.status(500).send("Internal Server Error: " + err.message);
 });
 
-app.get("/user", (req, res) => {
-  //logic to fetching user
-  res.send("User Route");
-});
-
-app.get("/admin/getAllData", (req, res) => {
+app.get("/admin/getAllData", AuthAdmin, (req, res) => {
   //logic to fetching  all data
+  //  try {
+  throw new Error("Some error occurred while fetching data");
   res.send("All Data fetched");
+  //} catch (err) {
+  console.error(err);
+  // res.status(500).send("Internal Server Error: " + err.message);
+  //}
 });
 
-app.get("/admin/deleteuser", (req, res) => {
-  //logic to delete all data
-  res.send("All Data deleted");
-});
-
-app.post("/user/login", (req, res) => {
-  //logic to delete all data
-  res.send("User logged in successfully");
+app.use("/", (err, req, res, next) => {
+  console.error("Global error handler:", err);
+  res.status(500).send("Internal Server Error: " + err.message);
 });
 
 app.listen(7777, () => {
