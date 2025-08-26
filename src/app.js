@@ -1,39 +1,43 @@
 const express = require("express");
-//const connectDB = require("./config/database"); // Import the database connection setup
-//const User = require("./models/user"); // Import the User model
-const { AuthAdmin, AuthUser } = require("./middlewares/auth"); // Import the User model
+const connectDB = require("./config/database"); // Import the database connection setup
+const User = require("./models/user"); // Import the User model
+//const { AuthAdmin, AuthUser } = require("./middlewares/auth"); // Import the User model
 
 const app = express();
+app.use(express.json()); // Middleware to parse JSON request bodies convert JSON to JS object
 
-// app.post("/signUp", async (req, res) => {
-//   const user = new User({
-//     firstName: "Arvind",
-//     lastName: "S",
-//     emailId: "arvind@gmail.com",
-//     password: "Arvind@123",
-//     age: 24,
-//     gender: "Male",
-//   });
+// Creating a new instance of User model and saving to DB
+app.post("/signUp", async (req, res) => {
+  console.log(req.body);
+  //   const user = new User({
+  //     firstName: "Arvind",
+  //     lastName: "S",
+  //     emailId: "arvind@gmail.com",
+  //     password: "Arvind@123",
+  //     age: 24,
+  //     gender: "Male",
+  //   });
 
-//   try {
-//     await user.save();
-//     res.send("User Added Successfully");
-//   } catch (err) {
-//     console.error("Error saving user:", err);
-//     res.status(500).send("Error saving the user : " + err.message);
-//   }
-// });
+  const user = new User(req.body); // Create a new User instance with data from request body
+  try {
+    await user.save();
+    res.send("User Added Successfully");
+  } catch (err) {
+    console.error("Error saving user:", err);
+    res.status(500).send("Error saving the user : " + err.message);
+  }
+});
 
-// connectDB()
-//   .then(() => {
-//     console.log("MongoDB connected");
-//     app.listen(7777, () => {
-//       console.log("Server is running on port 7777");
-//     });
-//   })
-//   .catch((err) => {
-//     console.error("MongoDB connection error:", err);
-//   });
+connectDB()
+  .then(() => {
+    console.log("MongoDB connected");
+    app.listen(7777, () => {
+      console.log("Server is running on port 7777");
+    });
+  })
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+  });
 
 // app.get("/ab*c", (req, res) => {
 //   res.send("literal ? route");
@@ -201,26 +205,26 @@ const app = express();
 //   res.send("User logged in successfully");
 // });
 
-app.use("/", (err, req, res, next) => {
-  console.error("Global error handler:", err);
-  res.status(500).send("Internal Server Error: " + err.message);
-});
+// app.use("/", (err, req, res, next) => {
+//   console.error("Global error handler:", err);
+//   res.status(500).send("Internal Server Error: " + err.message);
+// });
 
-app.get("/admin/getAllData", AuthAdmin, (req, res) => {
-  //logic to fetching  all data
-  //  try {
-  throw new Error("Some error occurred while fetching data");
-  res.send("All Data fetched");
-  //} catch (err) {
-  console.error(err);
-  // res.status(500).send("Internal Server Error: " + err.message);
-  //}
-});
+// app.get("/admin/getAllData", AuthAdmin, (req, res) => {
+//   //logic to fetching  all data
+//   //  try {
+//   throw new Error("Some error occurred while fetching data");
+//   res.send("All Data fetched");
+//   //} catch (err) {
+//   console.error(err);
+//   // res.status(500).send("Internal Server Error: " + err.message);
+//   //}
+// });
 
-app.use("/", (err, req, res, next) => {
-  console.error("Global error handler:", err);
-  res.status(500).send("Internal Server Error: " + err.message);
-});
+// app.use("/", (err, req, res, next) => {
+//   console.error("Global error handler:", err);
+//   res.status(500).send("Internal Server Error: " + err.message);
+// });
 
 app.listen(7777, () => {
   console.log("Server is running on port 7777");

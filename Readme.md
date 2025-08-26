@@ -11,6 +11,7 @@
 - Differnce between caret and tidle (^ vs ~ )
 
 //Routing and Request Handler
+
 - Initialize git
 - gitignore
 - create a remote repo on github
@@ -25,6 +26,7 @@
 - reading the dynamic routes
 
 // Middlwares and error handlers:
+
 - Multiple Route handlers - play with your code
 - next()
 - next function and error along with res.send()
@@ -37,6 +39,7 @@
 - Error handling using app.use("/", (err, req , res , next )=> {}) always handle at ur project
 
 // Database - Schema & Models
+
 - create a free cluster on mongoDB offical website (Mongo atlast)
 - Install mongoose library
 - Connect your application to the database "Connection-url/devTinder"
@@ -45,3 +48,9 @@
 - Create POST /signUp to add data to database
 - push some documents using api calls from postman
 - Error handling using try , catch
+
+//Diving into APIS S02-E07:
+
+- Difference Between JS Object and JSON Object
+- add express.json() middleware to ur app
+- make your signup API dynamic to receieve data from the end user
