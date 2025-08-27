@@ -58,3 +58,4 @@
 - API - get user by email
 - API -Feed API - get all user from the database
 - Create Delete API using ID
+- Differenec between PATCH and PUT
