@@ -59,3 +59,7 @@
 - API -Feed API - get all user from the database
 - Create Delete API using ID
 - Differenec between PATCH and PUT
+- create update user API
+- Explore the mongoose documentation for model methods
+- what are options in a model.findOneAndUpdate method , explore more about it
+- API update a user using emailId
