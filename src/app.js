@@ -28,6 +28,43 @@ app.post("/signUp", async (req, res) => {
   }
 });
 
+
+//get user by email
+app.get("/getUsers", async (req, res) => {
+  console.log(req.body);
+  const userEmail = req.body.emailId;
+  console.log("Fetching users with email:", userEmail);
+
+  try {
+    const users = await User.findOne({ emailId: userEmail }); // Fetch all users from the database
+    if (users.length === 0) {
+      return res.status(404).send("No users found with the provided email.");
+    } else {
+      console.log("Users fetched:", users);
+      res.send(users);
+    }
+  } catch (err) {
+    console.error("Error fetching users:", err);
+    res.status(500).send("Error fetching users: " + err.message);
+  }
+});
+
+// get all users - Feed API
+app.get("/feed", async (req, res) => {
+  try {
+    const users = await User.find({});
+    if (users.length === 0) {
+      return res.status(404).send("No users found.");
+    } else {
+      console.log("Users fetched:", users);
+      res.send(users);
+    }
+  } catch (err) {
+    console.error("Error fetching users:", err);
+    res.status(500).send("Error fetching users: " + err.message);
+  }
+});
+
 connectDB()
   .then(() => {
     console.log("MongoDB connected");

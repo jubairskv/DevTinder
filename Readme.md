@@ -54,3 +54,6 @@
 - Difference Between JS Object and JSON Object
 - add express.json() middleware to ur app
 - make your signup API dynamic to receieve data from the end user
+- user.FindOne with duplicate data check which data returing
+- API - get user by email
+- API -Feed API - get all user from the database
