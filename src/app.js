@@ -28,7 +28,6 @@ app.post("/signUp", async (req, res) => {
   }
 });
 
-
 //get user by email
 app.get("/getUsers", async (req, res) => {
   console.log(req.body);
@@ -62,6 +61,18 @@ app.get("/feed", async (req, res) => {
   } catch (err) {
     console.error("Error fetching users:", err);
     res.status(500).send("Error fetching users: " + err.message);
+  }
+});
+
+//Delete user by id:
+app.delete("/user", async (req, res) => {
+  const userId = req.body.id;
+  try {
+    //const UserId = await User.findByIdAndDelete(userId); // both works same like shorthand
+    const UserId = await User.findByIdAndDelete({ _id: userId });
+    res.send("User deleted successfully");
+  } catch (err) {
+    res.status(500).send("Something went wrong");
   }
 });
 
