@@ -57,3 +57,4 @@
 - user.FindOne with duplicate data check which data returing
 - API - get user by email
 - API -Feed API - get all user from the database
+- Create Delete API using ID
