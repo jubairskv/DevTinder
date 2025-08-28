@@ -75,4 +75,11 @@
 - Add API level validation on patch  request & SignUp post APi
 - Data Sanitizing - Add API Validation for each fields 
 - Install Validatore 
-- Explore Validator library function and use validator functions for password , email 
+- Explore Validator library function and use validator functions for password , email
+- NEVER TRUST req.body
+
+// Encrypting passowrd 
+
+- validate data in signUp API
+- Install bcrypt package 
+- Create PasswordHash using bcrypt.hash & save the user is encrypted password 

@@ -2,6 +2,8 @@ const express = require("express");
 const connectDB = require("./config/database"); // Import the database connection setup
 const User = require("./models/user"); // Import the User model
 //const { AuthAdmin, AuthUser } = require("./middlewares/auth"); // Import the User model
+const { validateSignUpData } = require("./utils/Validators");
+const bcrypt = require("bcrypt");
 
 const app = express();
 app.use(express.json()); // Middleware to parse JSON request bodies convert JSON to JS object
@@ -18,13 +20,44 @@ app.post("/signUp", async (req, res) => {
   //     gender: "Male",
   //   });
 
-  const user = new User(req.body); // Create a new User instance with data from request body
   try {
+    validateSignUpData(req); // Validate the sign-up data
+    const { password, firstName, lastName, emailId } = req.body;
+    const passwordHash = await bcrypt.hash(password, 10); // Encrypt the password with a salt round of 10
+    console.log("Password Hash:", passwordHash);
+
+    const user = new User({
+      firstName,
+      lastName,
+      emailId,
+      password: passwordHash,
+    }); // Create a new User instance with data from request body
     await user.save();
     res.send("User Added Successfully");
   } catch (err) {
     console.error("Error saving user:", err);
     res.status(500).send("Error saving the user : " + err.message);
+  }
+});
+
+app.post("/login", async (req, res) => {
+  try {
+    const { emailId, password } = req.body;
+    const user = await User.findOne({ emailId });
+    if (!user) {
+      //return res.status(400).send("User not found");
+      throw new Error("Invalid Credentials");
+    }
+    const isPasswordvalid = await bcrypt.compare(password, user.password);
+    if (!isPasswordvalid) {
+      //return res.status(400).send("Invalid Password");
+      throw new Error("Invalid Credentials");
+    } else {
+      res.send("User logged in successfully");
+    }
+  } catch (err) {
+    console.error("Error logging in user:", err);
+    res.status(500).send("Error: " + err.message);
   }
 });
 
