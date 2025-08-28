@@ -76,10 +76,24 @@ app.delete("/user", async (req, res) => {
   }
 });
 
-app.patch("/user", async (req, res) => {
-  const userId = req.body.id;
+app.patch("/user/:id", async (req, res) => {
+  const userId = req.params.id;
   const data = req.body;
   try {
+    const ALLOWDUPDATES = ["about", "skills", "photoUrl", "gender", "age"];
+
+    const isAllowedUpdates = Object.keys(data).every((key) =>
+      ALLOWDUPDATES.includes(key)
+    );
+
+    if (!isAllowedUpdates) {
+      //return res.status(400).send("Invalid updates");
+      throw new Error("Invalid updates!");
+    }
+
+    if (data.skills.length > 10) {
+      throw new Error("Skills cannot be more than 10");
+    }
     //const User = await User.findByIdAndUpdate(userId, data, );
     const user = await User.findByIdAndUpdate({ _id: userId }, data, {
       returnDocument: "after",
@@ -87,7 +101,7 @@ app.patch("/user", async (req, res) => {
     console.log("Updated user:", user);
     res.send("User updated successfully");
   } catch (err) {
-    res.status(500).send("Something went wrong");
+    res.status(500).send("Update Failed: " + err.message);
   }
 });
 
@@ -98,6 +112,7 @@ app.patch("/user/email", async (req, res) => {
     //const User = await User.findByIdAndUpdate(userId, data, );
     const user = await User.findOneAndUpdate({ emailId: userEmail }, data, {
       returnDocument: "after",
+      runValidators: true, // to run schema validations on update
     }); // both works same like shorthand
     console.log("Updated user:", user);
     res.send("User updated successfully");
