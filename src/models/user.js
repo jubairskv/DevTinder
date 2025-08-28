@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator"); // Import the validator library for additional validation
 
 const userSchema = new mongoose.Schema(
   {
@@ -18,11 +19,21 @@ const userSchema = new mongoose.Schema(
       unique: true, // Ensure email is unique across users
       lowercase: true, // Convert email to lowercase before saving (helps with uniqueness)
       trim: true, // Remove whitespace from both ends of the email
-      match: [/\S+@\S+\.\S+/, "is invalid"], // Basic email format validation
+      //match: [/\S+@\S+\.\S+/, "Invalid email format"], // Basic email format validation
+      validate(value) {
+        if (!validator.isEmail(value)) {
+          throw new Error("Invalid email address: " + value);
+        }
+      },
     },
     password: {
       type: String,
       required: true,
+      validate(value) {
+        if (!validator.isStrongPassword(value)) {
+          throw new Error("Enter a strong password: " + value);
+        }
+      },
     },
     age: {
       type: Number,
@@ -41,6 +52,11 @@ const userSchema = new mongoose.Schema(
     photoUrl: {
       type: String,
       default: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+      validate(value) {
+        if (!validator.isURL(value)) {
+          throw new Error("Invalid photo address: " + value);
+        }
+      },
     },
     about: {
       type: String,
