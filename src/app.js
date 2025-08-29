@@ -72,9 +72,15 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/profile", (req, res) => {
+app.get("/profile", async (req, res) => {
   const cookie = req.cookies;
   const { token } = req.cookies;
+
+  const decode = await jwt.verify(token, "@Dev12345");
+
+  const { _id } = decode;
+
+  console.log("Logged In User ID:" + _id);
 
   if (!token) {
     return res.status(401).send("Unauthorized: Invalid or missing token");
