@@ -3,8 +3,9 @@ const connectDB = require("./config/database"); // Import the database connectio
 const User = require("./models/user"); // Import the User model
 //const { AuthAdmin, AuthUser } = require("./middlewares/auth"); // Import the User model
 const { validateSignUpData } = require("./utils/Validators");
-const bcrypt = require("bcrypt");
-const cookieParser = require("cookie-parser");
+const bcrypt = require("bcrypt"); // Import bcrypt for password hashing
+const jwt = require("jsonwebtoken"); // Import jsonwebtoken for JWT handling
+const cookieParser = require("cookie-parser"); // Import the cookie-parser middleware
 
 const app = express();
 app.use(express.json()); // Middleware to parse JSON request bodies convert JSON to JS object
@@ -55,9 +56,12 @@ app.post("/login", async (req, res) => {
       //return res.status(400).send("Invalid Password");
 
       // Create a JWT Token
+      const Token = await jwt.sign({ _id: user._id }, "@Dev12345");
+
+      console.log("JWT Token:", Token);
 
       // Add the token to cookies or send the response back to the user
-      res.cookie("token", "xyz12asasasasasas3abc");
+      res.cookie("token", Token);
       res.send("User logged in successfully");
     } else {
       throw new Error("Invalid Credentials");
