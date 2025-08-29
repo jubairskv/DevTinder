@@ -67,19 +67,30 @@
 // Data Sanitization and validation & Schema Validations:
 
 - Explore schemaTypes options from the documentions
-- Add require , min , minLength , trim , unique , lowercase  
+- Add require , min , minLength , trim , unique , lowercase
 - Add default
 - Create a custom validate function for gender
-- Improve the DB schema - PUT all appropriate  validations on each field in schema
+- Improve the DB schema - PUT all appropriate validations on each field in schema
 - Add timestamps to user schema
-- Add API level validation on patch  request & SignUp post APi
-- Data Sanitizing - Add API Validation for each fields 
-- Install Validatore 
+- Add API level validation on patch request & SignUp post APi
+- Data Sanitizing - Add API Validation for each fields
+- Install Validatore
 - Explore Validator library function and use validator functions for password , email
 - NEVER TRUST req.body
 
-// Encrypting passowrd 
+// Encrypting passowrd
 
 - validate data in signUp API
-- Install bcrypt package 
-- Create PasswordHash using bcrypt.hash & save the user is encrypted password 
+- Install bcrypt package
+- Create PasswordHash using bcrypt.hash & save the user is encrypted password
+- Create Login API
+- Compare passoword and throw errors if email or password is valid
+
+// Athentications JWT , Cookies
+
+- install cookie parser
+- just send dummy cookie to user
+- create GET /profile api and check if you get the cookie back
+- install jsonwebtoken
+- IN login API after email and pasword validation create JWT and sent it to user in cookie
+- read the cookie insdie your profile API and find the logged in user
