@@ -4,9 +4,11 @@ const User = require("./models/user"); // Import the User model
 //const { AuthAdmin, AuthUser } = require("./middlewares/auth"); // Import the User model
 const { validateSignUpData } = require("./utils/Validators");
 const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 app.use(express.json()); // Middleware to parse JSON request bodies convert JSON to JS object
+app.use(cookieParser()); // Middleware to parse cookies from incoming requests
 
 // Creating a new instance of User model and saving to DB
 app.post("/signUp", async (req, res) => {
@@ -49,16 +51,32 @@ app.post("/login", async (req, res) => {
       throw new Error("Invalid Credentials");
     }
     const isPasswordvalid = await bcrypt.compare(password, user.password);
-    if (!isPasswordvalid) {
+    if (isPasswordvalid) {
       //return res.status(400).send("Invalid Password");
-      throw new Error("Invalid Credentials");
-    } else {
+
+      // Create a JWT Token
+
+      // Add the token to cookies or send the response back to the user
+      res.cookie("token", "xyz12asasasasasas3abc");
       res.send("User logged in successfully");
+    } else {
+      throw new Error("Invalid Credentials");
     }
   } catch (err) {
     console.error("Error logging in user:", err);
     res.status(500).send("Error: " + err.message);
   }
+});
+
+app.get("/profile", (req, res) => {
+  const cookie = req.cookies;
+  const { token } = req.cookies;
+
+  if (!token) {
+    return res.status(401).send("Unauthorized: Invalid or missing token");
+  }
+  console.log("Cookies:", cookie);
+  res.send("Reading cookies");
 });
 
 //get user by email
