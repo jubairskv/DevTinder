@@ -6,6 +6,7 @@ const { validateSignUpData } = require("./utils/Validators");
 const bcrypt = require("bcrypt"); // Import bcrypt for password hashing
 const jwt = require("jsonwebtoken"); // Import jsonwebtoken for JWT handling
 const cookieParser = require("cookie-parser"); // Import the cookie-parser middleware
+const { userAuth } = require("./middlewares/auth");
 
 const app = express();
 app.use(express.json()); // Middleware to parse JSON request bodies convert JSON to JS object
@@ -72,21 +73,15 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/profile", async (req, res) => {
-  const cookie = req.cookies;
-  const { token } = req.cookies;
-
-  const decode = await jwt.verify(token, "@Dev12345");
-
-  const { _id } = decode;
-
-  console.log("Logged In User ID:" + _id);
-
-  if (!token) {
-    return res.status(401).send("Unauthorized: Invalid or missing token");
+app.get("/profile", userAuth, async (req, res) => {
+  console.log(req.user);
+  try {
+    const user = req.user; // Assuming user is attached to req in auth middleware
+    res.send(user);
+  } catch (err) {
+    console.error("Error fetching profile:", err);
+    res.status(400).send("Error: " + err.message);
   }
-  console.log("Cookies:", cookie);
-  res.send("Reading cookies");
 });
 
 //get user by email
