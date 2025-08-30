@@ -95,7 +95,13 @@
 - IN login API after email and pasword validation create JWT and sent it to user in cookie
 - read the cookie insdie your profile API and find the logged in user
 - UserAuth Middleware
-- add the userAuth middleare in profile APIs and  new connection APIs
+- add the userAuth middleare in profile APIs and new connection APIs
 - set expiry of JWT token and cookies to 7Days
-- Create userschema  method to getJWT()
+- Create userschema method to getJWT()
 - create userschema method to comparepassword(passwordInputByUser)
+
+//Diving into APIs and Express Routers
+
+- Explore Tinder APIs
+- Create a list of all APis you can think of in dev Tinder
+- Group multiple routes under respective routers
