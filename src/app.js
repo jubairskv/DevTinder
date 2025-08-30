@@ -3,8 +3,6 @@ const connectDB = require("./config/database"); // Import the database connectio
 const User = require("./models/user"); // Import the User model
 //const { AuthAdmin, AuthUser } = require("./middlewares/auth"); // Import the User model
 const { validateSignUpData } = require("./utils/Validators");
-const bcrypt = require("bcrypt"); // Import bcrypt for password hashing
-const jwt = require("jsonwebtoken"); // Import jsonwebtoken for JWT handling
 const cookieParser = require("cookie-parser"); // Import the cookie-parser middleware
 const { userAuth } = require("./middlewares/auth");
 const e = require("express");
@@ -53,14 +51,13 @@ app.post("/login", async (req, res) => {
       //return res.status(400).send("User not found");
       throw new Error("Invalid Credentials");
     }
-    const isPasswordvalid = await bcrypt.compare(password, user.password);
+    const isPasswordvalid = await user.validatePassword(password);
+
     if (isPasswordvalid) {
       //return res.status(400).send("Invalid Password");
 
       // Create a JWT Token
-      const Token = await jwt.sign({ _id: user._id }, "@Dev12345", {
-        expiresIn: "1h",
-      });
+      const Token = await user.getJWT();
 
       console.log("JWT Token:", Token);
 
