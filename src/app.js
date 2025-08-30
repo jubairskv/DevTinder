@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt"); // Import bcrypt for password hashing
 const jwt = require("jsonwebtoken"); // Import jsonwebtoken for JWT handling
 const cookieParser = require("cookie-parser"); // Import the cookie-parser middleware
 const { userAuth } = require("./middlewares/auth");
+const e = require("express");
 
 const app = express();
 app.use(express.json()); // Middleware to parse JSON request bodies convert JSON to JS object
@@ -57,12 +58,19 @@ app.post("/login", async (req, res) => {
       //return res.status(400).send("Invalid Password");
 
       // Create a JWT Token
-      const Token = await jwt.sign({ _id: user._id }, "@Dev12345");
+      const Token = await jwt.sign({ _id: user._id }, "@Dev12345", {
+        expiresIn: "1h",
+      });
 
       console.log("JWT Token:", Token);
 
       // Add the token to cookies or send the response back to the user
-      res.cookie("token", Token);
+      res.cookie(
+        "token",
+        Token,
+        { httpOnly: true, secure: true },
+        { expires: new Date(Date.now() + 1 * 3600000) } // Cookie expires in 1 hours
+      );
       res.send("User logged in successfully");
     } else {
       throw new Error("Invalid Credentials");
@@ -80,6 +88,15 @@ app.get("/profile", userAuth, async (req, res) => {
     res.send(user);
   } catch (err) {
     console.error("Error fetching profile:", err);
+    res.status(400).send("Error: " + err.message);
+  }
+});
+
+app.post("/sendConnection", userAuth, async (req, res) => {
+  try {
+    res.send(req.user.firstName + " " + "Connection request sent successfully");
+  } catch (err) {
+    console.error("Error sending connection request:", err);
     res.status(400).send("Error: " + err.message);
   }
 });
