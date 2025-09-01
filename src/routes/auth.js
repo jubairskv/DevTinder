@@ -1,4 +1,7 @@
 const express = require("express");
+const User = require("../models/user"); // Import the User model
+const { validateSignUpData } = require("../utils/Validators");
+const bcrypt = require("bcrypt");
 
 // const app = express();
 // const router = express.Router();

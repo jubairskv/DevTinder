@@ -4,14 +4,21 @@ const User = require("./models/user"); // Import the User model
 //const { AuthAdmin, AuthUser } = require("./middlewares/auth"); // Import the User model
 const { validateSignUpData } = require("./utils/Validators");
 const cookieParser = require("cookie-parser"); // Import the cookie-parser middleware
-const { userAuth } = require("./middlewares/auth");
-const e = require("express");
+const { userAuth } = require("./middleware/auth");
+const bcrypt = require("bcrypt");
+
+const profileRouter = require("./routes/profile");
+const requestRouter = require("./routes/request");
+const authRouter = require("./routes/auth");
 
 const app = express();
 app.use(express.json()); // Middleware to parse JSON request bodies convert JSON to JS object
 app.use(cookieParser()); // Middleware to parse cookies from incoming requests
+app.use("/", authRouter); // Use the auth router for authentication routes
+app.use("/", profileRouter);
+app.use("/", requestRouter);
 
-// // Creating a new instance of User model and saving to DB
+// Creating a new instance of User model and saving to DB
 // app.post("/signUp", async (req, res) => {
 //   console.log(req.body);
 //   //   const user = new User({
@@ -98,98 +105,98 @@ app.use(cookieParser()); // Middleware to parse cookies from incoming requests
 //   }
 // });
 
-//get user by email
-app.get("/getUsers", async (req, res) => {
-  console.log(req.body);
-  const userEmail = req.body.emailId;
-  console.log("Fetching users with email:", userEmail);
+// //get user by email
+// app.get("/getUsers", async (req, res) => {
+//   console.log(req.body);
+//   const userEmail = req.body.emailId;
+//   console.log("Fetching users with email:", userEmail);
 
-  try {
-    const users = await User.findOne({ emailId: userEmail }); // Fetch all users from the database
-    if (users.length === 0) {
-      return res.status(404).send("No users found with the provided email.");
-    } else {
-      console.log("Users fetched:", users);
-      res.send(users);
-    }
-  } catch (err) {
-    console.error("Error fetching users:", err);
-    res.status(500).send("Error fetching users: " + err.message);
-  }
-});
+//   try {
+//     const users = await User.findOne({ emailId: userEmail }); // Fetch all users from the database
+//     if (users.length === 0) {
+//       return res.status(404).send("No users found with the provided email.");
+//     } else {
+//       console.log("Users fetched:", users);
+//       res.send(users);
+//     }
+//   } catch (err) {
+//     console.error("Error fetching users:", err);
+//     res.status(500).send("Error fetching users: " + err.message);
+//   }
+// });
 
-// get all users - Feed API
-app.get("/feed", async (req, res) => {
-  try {
-    const users = await User.find({});
-    if (users.length === 0) {
-      return res.status(404).send("No users found.");
-    } else {
-      console.log("Users fetched:", users);
-      res.send(users);
-    }
-  } catch (err) {
-    console.error("Error fetching users:", err);
-    res.status(500).send("Error fetching users: " + err.message);
-  }
-});
+// // get all users - Feed API
+// app.get("/feed", async (req, res) => {
+//   try {
+//     const users = await User.find({});
+//     if (users.length === 0) {
+//       return res.status(404).send("No users found.");
+//     } else {
+//       console.log("Users fetched:", users);
+//       res.send(users);
+//     }
+//   } catch (err) {
+//     console.error("Error fetching users:", err);
+//     res.status(500).send("Error fetching users: " + err.message);
+//   }
+// });
 
-//Delete user by id:
-app.delete("/user", async (req, res) => {
-  const userId = req.body.id;
-  try {
-    //const UserId = await User.findByIdAndDelete(userId); // both works same like shorthand
-    const UserId = await User.findByIdAndDelete({ _id: userId });
-    res.send("User deleted successfully");
-  } catch (err) {
-    res.status(500).send("Something went wrong");
-  }
-});
+// //Delete user by id:
+// app.delete("/user", async (req, res) => {
+//   const userId = req.body.id;
+//   try {
+//     //const UserId = await User.findByIdAndDelete(userId); // both works same like shorthand
+//     const UserId = await User.findByIdAndDelete({ _id: userId });
+//     res.send("User deleted successfully");
+//   } catch (err) {
+//     res.status(500).send("Something went wrong");
+//   }
+// });
 
-app.patch("/user/:id", async (req, res) => {
-  const userId = req.params.id;
-  const data = req.body;
-  try {
-    const ALLOWDUPDATES = ["about", "skills", "photoUrl", "gender", "age"];
+// app.patch("/user/:id", async (req, res) => {
+//   const userId = req.params.id;
+//   const data = req.body;
+//   try {
+//     const ALLOWDUPDATES = ["about", "skills", "photoUrl", "gender", "age"];
 
-    const isAllowedUpdates = Object.keys(data).every((key) =>
-      ALLOWDUPDATES.includes(key)
-    );
+//     const isAllowedUpdates = Object.keys(data).every((key) =>
+//       ALLOWDUPDATES.includes(key)
+//     );
 
-    if (!isAllowedUpdates) {
-      //return res.status(400).send("Invalid updates");
-      throw new Error("Invalid updates!");
-    }
+//     if (!isAllowedUpdates) {
+//       //return res.status(400).send("Invalid updates");
+//       throw new Error("Invalid updates!");
+//     }
 
-    if (data.skills.length > 10) {
-      throw new Error("Skills cannot be more than 10");
-    }
-    //const User = await User.findByIdAndUpdate(userId, data, );
-    const user = await User.findByIdAndUpdate({ _id: userId }, data, {
-      returnDocument: "after",
-    }); // both works same like shorthand
-    console.log("Updated user:", user);
-    res.send("User updated successfully");
-  } catch (err) {
-    res.status(500).send("Update Failed: " + err.message);
-  }
-});
+//     if (data.skills.length > 10) {
+//       throw new Error("Skills cannot be more than 10");
+//     }
+//     //const User = await User.findByIdAndUpdate(userId, data, );
+//     const user = await User.findByIdAndUpdate({ _id: userId }, data, {
+//       returnDocument: "after",
+//     }); // both works same like shorthand
+//     console.log("Updated user:", user);
+//     res.send("User updated successfully");
+//   } catch (err) {
+//     res.status(500).send("Update Failed: " + err.message);
+//   }
+// });
 
-app.patch("/user/email", async (req, res) => {
-  const userEmail = req.body.emailId;
-  const data = req.body;
-  try {
-    //const User = await User.findByIdAndUpdate(userId, data, );
-    const user = await User.findOneAndUpdate({ emailId: userEmail }, data, {
-      returnDocument: "after",
-      runValidators: true, // to run schema validations on update
-    }); // both works same like shorthand
-    console.log("Updated user:", user);
-    res.send("User updated successfully");
-  } catch (err) {
-    res.status(500).send("Something went wrong");
-  }
-});
+// app.patch("/user/email", async (req, res) => {
+//   const userEmail = req.body.emailId;
+//   const data = req.body;
+//   try {
+//     //const User = await User.findByIdAndUpdate(userId, data, );
+//     const user = await User.findOneAndUpdate({ emailId: userEmail }, data, {
+//       returnDocument: "after",
+//       runValidators: true, // to run schema validations on update
+//     }); // both works same like shorthand
+//     console.log("Updated user:", user);
+//     res.send("User updated successfully");
+//   } catch (err) {
+//     res.status(500).send("Something went wrong");
+//   }
+// });
 
 connectDB()
   .then(() => {
